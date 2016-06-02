@@ -2,18 +2,164 @@ puts; puts "SEEDING DATA FOR APP"
 puts; puts "SEED: Please contact the developer with any issues."
 puts; puts "SEED: Purging database!"
 puts;
-puts "SEED: Purging #{ Disease.destroy_all } Diseases"
-puts "SEED: Purging #{ MetricCategory.destroy_all } Metric Categories"
-puts "SEED: Purging #{ Metric.destroy_all } Metrics"
-puts "SEED: Purging #{ MetricDetail.destroy_all } Metric Details"
+puts "SEED: Purging #{ Measure.destroy_all.count } Measures"
+puts "SEED: Purging #{ Disease.destroy_all.count } Diseases"
+puts "SEED: Purging #{ MetricCategory.destroy_all.count } Metric Categories"
+puts "SEED: Purging #{ Metric.destroy_all.count } Metrics"
+puts "SEED: Purging #{ MetricDetail.destroy_all.count } Metric Details"
+puts "SEED: Purging #{ MetricSubdetail.destroy_all.count } Metric Subdetails"
 puts;
 
-diseases.each { |d| Disease.create(d) }
-metric_categories.each { |mc| MetricCategory.create(mc) }
-metrics.each { |m| Metric.create(m) }
-metric_details.each { |md| MetricDetail.create(md) }
+combined = Measure.create!(title: "Combined")
 
+cn = MetricCategory.create!(title: "Cranial Nerve")
+eye = Metric.create!(title: "Eye Closure", metric_category: cn)
+MetricDetail.create!(description: "no visible closure", score: 0, metric: eye)
+MetricDetail.create!(description: "severe weakness (>50% loss)", score: 1, metric: eye)
+MetricDetail.create!(description: "slight weakness (<50% loss)", score: 2, metric: eye)
+MetricDetail.create!(description: "normal", score: 3, metric: eye)
+lip = Metric.create!(title: "Lip Closure", metric_category: cn)
+MetricDetail.create!(description: "no visible closure", score: 0, metric: lip)
+MetricDetail.create!(description: "severe weakness (>50% loss)", score: 1, metric: lip)
+MetricDetail.create!(description: "slight weakness (<50% loss)", score: 2, metric: lip)
+MetricDetail.create!(description: "normal", score: 3, metric: lip)
+jaw = Metric.create!(title: "Jaw Closure", metric_category: cn)
+MetricDetail.create!(description: "no visible closure", score: 0, metric: jaw)
+MetricDetail.create!(description: "severe weakness (>50% loss)", score: 1, metric: jaw)
+MetricDetail.create!(description: "slight weakness (<50% loss)", score: 2, metric: jaw)
+MetricDetail.create!(description: "normal", score: 3, metric: jaw)
+neck_f = Metric.create!(title: "Neck Flexion", metric_category: cn)
+MetricDetail.create!(description: "no visible flexion", score: 0, metric: neck_f)
+MetricDetail.create!(description: "severe weakness (>50% loss)", score: 1, metric: neck_f)
+MetricDetail.create!(description: "slight weakness (<50% loss)", score: 2, metric: neck_f)
+MetricDetail.create!(description: "normal", score: 3, metric: neck_f)
+neck_e = Metric.create!(title: "Neck Extension", metric_category: cn)
+MetricDetail.create!(description: "no visible extension", score: 0, metric: neck_f)
+MetricDetail.create!(description: "severe weakness (>50% loss)", score: 1, metric: neck_f)
+MetricDetail.create!(description: "slight weakness (<50% loss)", score: 2, metric: neck_f)
+MetricDetail.create!(description: "normal", score: 3, metric: neck_f)
+
+ul = MetricCategory.create!(title: "Upper Limb")
+sh_abd = Metric.create!(title: "SH ABD", metric_category: ul)
+MetricDetail.create!(description: "paralysis", score: 0, metric: sh_abd)
+MetricDetail.create!(description: "flicker", score: 1, metric: sh_abd)
+MetricDetail.create!(description: "with gravity", score: 2, metric: sh_abd)
+MetricDetail.create!(description: "against gravity", score: 3, metric: sh_abd)
+sh_abd_over= MetricDetail.create!(description: "overcome", metric: sh_abd)
+MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: sh_abd_over)
+MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: sh_abd_over)
+MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: sh_abd_over)
+MetricDetail.create!(description: "normal", score: 7, metric: sh_abd)
+ef_abd = Metric.create!(title: "EF ABD", metric_category: ul)
+MetricDetail.create!(description: "paralysis", score: 0, metric: ef_abd)
+MetricDetail.create!(description: "flicker", score: 1, metric: ef_abd)
+MetricDetail.create!(description: "with gravity", score: 2, metric: ef_abd)
+MetricDetail.create!(description: "against gravity", score: 3, metric: ef_abd)
+ef_abd_over= MetricDetail.create!(description: "overcome", metric: ef_abd)
+MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: ef_abd_over)
+MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: ef_abd_over)
+MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: ef_abd_over)
+MetricDetail.create!(description: "normal", score: 7, metric: ef_abd)
+we_abd = Metric.create!(title: "WE ABD", metric_category: ul)
+MetricDetail.create!(description: "paralysis", score: 0, metric: we_abd)
+MetricDetail.create!(description: "flicker", score: 1, metric: we_abd)
+MetricDetail.create!(description: "with gravity", score: 2, metric: we_abd)
+MetricDetail.create!(description: "against gravity", score: 3, metric: we_abd)
+we_abd_over= MetricDetail.create!(description: "overcome", metric: we_abd)
+MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: we_abd_over)
+MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: we_abd_over)
+MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: we_abd_over)
+MetricDetail.create!(description: "normal", score: 7, metric: we_abd)
+turn = Metric.create!(title: "Turn Key", metric_category: ul)
+MetricDetail.create!(description: "unable", score: 0, metric: turn)
+MetricDetail.create!(description: "able but difficult", score: 1, metric: turn)
+MetricDetail.create!(description: "able", score: 2, metric: turn)
+knife = Metric.create!(title: "Knife and Fork", metric_category: ul)
+MetricDetail.create!(description: "unable", score: 0, metric: knife)
+MetricDetail.create!(description: "able but difficult", score: 1, metric: knife)
+MetricDetail.create!(description: "able", score: 2, metric: knife)
+dress = Metric.create!(title: "Dress Upper Body (excl. buttons)", metric_category: ul)
+MetricDetail.create!(description: "unable", score: 0, metric: dress)
+MetricDetail.create!(description: "able but difficult", score: 1, metric: dress)
+MetricDetail.create!(description: "able", score: 2, metric: dress)
+
+ll = MetricCategory.create!(title: "Lower Limb")
+hf = Metric.create!(title: "HF", metric_category: ll)
+MetricDetail.create!(description: "paralysis", score: 0, metric: hf)
+MetricDetail.create!(description: "flicker", score: 1, metric: hf)
+MetricDetail.create!(description: "with gravity", score: 2, metric: hf)
+MetricDetail.create!(description: "against gravity", score: 3, metric: hf)
+hf_over= MetricDetail.create!(description: "overcome", metric: hf)
+MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: hf_over)
+MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: hf_over)
+MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: hf_over)
+MetricDetail.create!(description: "normal", score: 7, metric: hf)
+ke = Metric.create!(title: "KE", metric_category: ll)
+MetricDetail.create!(description: "paralysis", score: 0, metric: ke)
+MetricDetail.create!(description: "flicker", score: 1, metric: ke)
+MetricDetail.create!(description: "with gravity", score: 2, metric: ke)
+MetricDetail.create!(description: "against gravity", score: 3, metric: ke)
+ke_over= MetricDetail.create!(description: "overcome", metric: ke)
+MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: ke_over)
+MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: ke_over)
+MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: ke_over)
+MetricDetail.create!(description: "normal", score: 7, metric: ke)
+dorsif = Metric.create!(title: "Dorsifl", metric_category: ll)
+MetricDetail.create!(description: "paralysis", score: 0, metric: dorsif)
+MetricDetail.create!(description: "flicker", score: 1, metric: dorsif)
+MetricDetail.create!(description: "with gravity", score: 2, metric: dorsif)
+MetricDetail.create!(description: "against gravity", score: 3, metric: dorsif)
+dorsif_over= MetricDetail.create!(description: "overcome", metric: dorsif)
+MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: dorsif_over)
+MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: dorsif_over)
+MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: dorsif_over)
+MetricDetail.create!(description: "normal", score: 7, metric: dorsif)
+stairs = Metric.create!(title: "Stairs", metric_category: ll)
+MetricDetail.create!(description: "unable", score: 0, metric: stairs)
+MetricDetail.create!(description: "able but difficult", score: 1, metric: stairs)
+MetricDetail.create!(description: "able", score: 2, metric: stairs)
+out = Metric.create!(title: "Walk outdoors", metric_category: ll)
+MetricDetail.create!(description: "unable", score: 0, metric: out)
+MetricDetail.create!(description: "able but difficult", score: 1, metric: out)
+MetricDetail.create!(description: "able", score: 2, metric: out)
+onem = Metric.create!(title: "Walk 1m", metric_category: ll)
+MetricDetail.create!(description: "unable", score: 0, metric: onem)
+MetricDetail.create!(description: "able but difficult", score: 1, metric: onem)
+MetricDetail.create!(description: "able", score: 2, metric: onem)
+
+sense = MetricCategory.create!(title: "Sensation")
+up = Metric.create!(title: "Upper Limb", metric_category: sense)
+MetricDetail.create!(description: ">75% affected", score: 0, metric: up)
+MetricDetail.create!(description: "50-75% affected", score: 1, metric: up)
+MetricDetail.create!(description: "0-50% affected", score: 2, metric: up)
+MetricDetail.create!(description: "unaffected", score: 3, metric: up)
+lo = Metric.create!(title: "Lower Limb", metric_category: sense)
+MetricDetail.create!(description: ">75% affected", score: 0, metric: lo)
+MetricDetail.create!(description: "50-75% affected", score: 1, metric: lo)
+MetricDetail.create!(description: "0-50% affected", score: 2, metric: lo)
+MetricDetail.create!(description: "unaffected", score: 3, metric: lo)
+
+pain = MetricCategory.create!(title: "Pain")
+res = Metric.create!(title: "Response", metric_category: pain)
+MetricDetail.create!(description: "severe", score: 0, metric: res)
+MetricDetail.create!(description: "moderate", score: 1, metric: res)
+MetricDetail.create!(description: "nil", score: 2, metric: res)
+
+gbs       = Disease.create!(title: "GBS/AIDP", metric_categories: [cn, ul, ll], measure: combined)
+gdp       = Disease.create!(title: "GDP", metric_categories: [cn, ul, ll], measure: combined)
+infl_neur = Disease.create!(title: "Inflammatory Neuropathy", metric_categories: [cn, ul, ll], measure: combined)
+pn        = Disease.create!(title: "PN", metric_categories: [cn, ul, ll], measure: combined)
+immn      = Disease.create!(title: "IMMN", metric_categories: [cn, ul, ll], measure: combined)
+infl_my   = Disease.create!(title: "Inflammatory Myopathy", metric_categories: [cn, ul, ll], measure: combined)
+ibm       = Disease.create!(title: "IBM", metric_categories: [cn, ul, ll], measure: combined)
+prox_my   = Disease.create!(title: "Prox Myopathy", metric_categories: [cn, ul, ll], measure: combined)
+gen       = Disease.create!(title: "Gen Weakness", metric_categories: [cn, ul, ll], measure: combined)
+mg        = Disease.create!(title: "MG", metric_categories: [cn, ul, ll], measure: combined)
+
+puts "SEED: Created #{ Measure.count } Measures"
 puts "SEED: Created #{ Disease.count } Diseases"
 puts "SEED: Created #{ MetricCategory.count } Metric Categories"
 puts "SEED: Created #{ Metric.count } Metrics"
 puts "SEED: Created #{ MetricDetail.count } Metric Details"
+puts "SEED: Created #{ MetricSubdetail.count } Metric Subdetails"
+puts "SEEDING COMPLETE"

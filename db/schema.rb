@@ -11,12 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531092514) do
+ActiveRecord::Schema.define(version: 20160602102107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "diseases", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "measure_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "diseases_metric_categories", id: false, force: :cascade do |t|
+    t.integer "disease_id"
+    t.integer "metric_category_id"
+  end
+
+  add_index "diseases_metric_categories", ["disease_id"], name: "index_diseases_metric_categories_on_disease_id", using: :btree
+  add_index "diseases_metric_categories", ["metric_category_id"], name: "index_diseases_metric_categories_on_metric_category_id", using: :btree
+
+  create_table "measures", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,7 +39,6 @@ ActiveRecord::Schema.define(version: 20160531092514) do
 
   create_table "metric_categories", force: :cascade do |t|
     t.string   "title"
-    t.integer  "disease_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -37,10 +51,17 @@ ActiveRecord::Schema.define(version: 20160531092514) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "metrics", force: :cascade do |t|
+  create_table "metric_subdetails", force: :cascade do |t|
     t.string   "description"
-    t.integer  "metric_category_id"
     t.integer  "score"
+    t.integer  "metric_detail_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "metrics", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "metric_category_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end

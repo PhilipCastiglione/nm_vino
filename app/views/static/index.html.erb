@@ -1,1 +1,18 @@
-Hello Vino! <3
+<% @measures.each do |measure| %>
+  <p><%= measure.title %></p>
+  <% measure.diseases.each do |disease| %>
+    <p><%= disease.title %></p>
+    <% disease.metric_categories.each do |metric_category| %>
+      <p><%= metric_category.title %></p>
+      <% metric_category.metrics.each do |metric| %>
+        <p><%= metric.title %></p>
+        <% metric.metric_details.each do |metric_detail| %>
+          <p><%= metric_detail.description %></p>
+          <% metric_detail.metric_subdetails.each do |metric_subdetail| %>
+            <p><%= metric_subdetail.description %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

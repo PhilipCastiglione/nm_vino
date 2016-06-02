@@ -1,6 +1,6 @@
 class MetricCategory < ActiveRecord::Base
+  has_and_belongs_to_many :diseases
   has_many :metrics
-  belongs_to :disease
 
-  validates :title, :disease_id, presence: true
+  validates :title, presence: true
 end

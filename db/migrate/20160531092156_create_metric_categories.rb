@@ -2,7 +2,6 @@ class CreateMetricCategories < ActiveRecord::Migration
   def change
     create_table :metric_categories do |t|
       t.string :title
-      t.integer :disease_id
 
       t.timestamps null: false
     end

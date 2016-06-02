@@ -1,5 +1,6 @@
 class MetricDetail < ActiveRecord::Base
   belongs_to :metric
+  has_many :metric_subdetails
 
-  validates :description, :metric_id, :score, presence: true
+  validates :metric_id, :description, presence: true
 end
