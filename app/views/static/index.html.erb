@@ -1,18 +1,22 @@
+<h1>Neuromuscular Data Tool</h1>
+<p>Select a measure:</p>
 <% @measures.each do |measure| %>
-  <p><%= measure.title %></p>
-  <% measure.diseases.each do |disease| %>
-    <p><%= disease.title %></p>
-    <% disease.metric_categories.each do |metric_category| %>
-      <p><%= metric_category.title %></p>
-      <% metric_category.metrics.each do |metric| %>
-        <p><%= metric.title %></p>
-        <% metric.metric_details.each do |metric_detail| %>
-          <p><%= metric_detail.description %></p>
-          <% metric_detail.metric_subdetails.each do |metric_subdetail| %>
-            <p><%= metric_subdetail.description %></p>
+  <div class="measure">
+    <%= measure.title %>
+    <% measure.diseases.each do |disease| %>
+      <div class="disease"><%= disease.title %></div>
+      <% disease.metric_categories.each do |metric_category| %>
+        <div class="metric-category"><%= metric_category.title %></div>
+        <% metric_category.metrics.each do |metric| %>
+          <div class="metric"><%= metric.title %></div>
+          <% metric.metric_details.each do |metric_detail| %>
+            <div class="metric-detail"><%= metric_detail.description %></div>
+            <% metric_detail.metric_subdetails.each do |metric_subdetail| %>
+              <div class="metric-subdetail"><%= metric_subdetail.description %></div>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
-  <% end %>
+  </div>
 <% end %>

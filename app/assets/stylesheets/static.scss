@@ -1,3 +1,22 @@
-// Place all the styles related to the Static controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.disease,
+.metric-category,
+.metric,
+.metric-detail,
+.metric-subdetail {
+  display: none;
+}
+
+.active .disease {
+  display: block;
+}
