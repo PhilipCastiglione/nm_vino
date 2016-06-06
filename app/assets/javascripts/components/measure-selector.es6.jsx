@@ -9,6 +9,7 @@ class MeasureSelector extends React.Component {
 
     return (
       <div>
+        <h2>Measures</h2>
         {measures}
       </div>
     );

@@ -1,4 +1,14 @@
 class RootNode extends React.Component {
+  path() {
+    let path = "";
+    if (this.state.selectedMeasure) { 
+      path += this.state.selectedMeasure.title;
+      if (this.state.selectedDisease) {
+        path += " > " + this.state.selectedDisease.title + " > " + this.state.selectedMetricCategory.title + " > " + this.state.selectedMetric.title;
+      }
+    }
+    return path;
+  }
   constructor(props) {
     super();
     this.state = { 
@@ -7,29 +17,71 @@ class RootNode extends React.Component {
       selectedDisease: null,
       selectedMetricCategory: null,
       selectedMetric: null,
-      pageTitle: 'Measures',
-      path: [] 
+      selectedMetricDetails: []
     }
   }
   selectMeasure(measureId) {
-    let m = this.state.data['measures'].filter ( measure => {
-      return measure['id'] === measureId;
-    })[0];
+    let m = this.state.data['measures'].find(measure => { return measure['id'] === measureId; });
     this.setState({'selectedMeasure': m});
   }
   selectDisease(diseaseId) {
-    let d = this.state.selectedMeasure['diseases'].filter ( disease => {
-      return disease['id'] === diseaseId;
-    })[0];
+    let d = this.state.selectedMeasure['diseases'].find(disease => { return disease['id'] === diseaseId; });
     this.setState({'selectedDisease': d});
-    // now we set the first metric category and metric  automatically
+    // now we set the first metric category and metric automatically
     let mc = d['metric_categories'][0];
     this.setState({'selectedMetricCategory': mc});
     let m = mc['metrics'][0];
     this.setState({'selectedMetric': m});
   }
   selectMetricDetail(metricDetailId) {
-    console.log(metricDetailId);
+    let md = this.state.selectedMetric['metric_details'].find(metric_detail => { return metric_detail['id'] === metricDetailId; });
+    if (md['metric_subdetails'].length > 0) {
+      console.log('show subdetails');
+      // TODO: if it has metricSubdetails, show them
+    } else {
+      this.state.selectedMetricDetails.push(metricDetailId);
+      if (!this.lastMetricInCategory()) {
+        this.incrementMetric();
+      } else {
+        if (!this.lastCategoryInDisease()) {
+          this.incrementCategory();
+        } else {
+          this.completeScoring();
+        }
+      }
+    }
+  }
+  lastMetricInCategory() {
+    return this.state.selectedMetric === [...this.state.selectedMetricCategory['metrics']].pop();
+  }
+  incrementMetric() {
+    let idx = this.state.selectedMetricCategory['metrics'].indexOf(this.state.selectedMetric);
+    let m = this.state.selectedMetricCategory['metrics'][++idx];
+    this.setState({'selectedMetric': m});
+  }
+  lastCategoryInDisease() {
+    return this.state.selectedMetricCategory === [...this.state.selectedDisease['metric_categories']].pop();
+  }
+  incrementCategory() {
+    let idx = this.state.selectedDisease['metric_categories'].indexOf(this.state.selectedMetricCategory);
+    let mc = this.state.selectedDisease['metric_categories'][++idx];
+    this.setState({'selectedMetricCategory': mc});
+    let m = mc['metrics'][0];
+    this.setState({'selectedMetric': m});
+  }
+  completeScoring() {
+    console.log('all done');
+    console.log(this.state.selectedMetricDetails);
+    // TODO: present confirm, post the ids to the end point for the scores actually maybe get with query params will be easiest
+  }
+  back() {
+    if (this.state.selectedMetricDetails.length > 0) {
+    // if there are any selected metric details, remove the last one, run the decrements
+    } else if (this.state.selectedDisease !== null) {
+      this.setState({'selectedDisease': null});
+    } else {
+      this.setState({'selectedMeasure': null});
+    }
   }
   render () {
     if (this.state.selectedMeasure === null) {
@@ -44,7 +96,7 @@ class RootNode extends React.Component {
     }
     return (
       <div>
-        <Header pageTitle={this.state.pageTitle} path={this.state.path} />
+        <Header path={this.path()} back={this.back.bind(this)} />
         {selector}
       </div>
     );

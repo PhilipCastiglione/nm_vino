@@ -2,14 +2,14 @@ class Header extends React.Component {
   render () {
     return (
       <div>
-        <h2>{this.props.pageTitle}</h2>
+        <h1>Neuromuscular Data Tool</h1>
         <div>{this.props.path}</div>
+        {(this.props.path.length > 0)? <div onClick={this.props.back}>Back</div> : ''}
       </div>
     );
   }
 }
 
 Header.propTypes = {
-  pageTitle: React.PropTypes.string,
-  path: React.PropTypes.array
+  path: React.PropTypes.string
 };

@@ -9,8 +9,8 @@ class MetricDetailSelector extends React.Component {
 
     return (
       <div>
-        <h3>{this.props.metricCategory.title}</h3>
-        <h4>{this.props.metric.title}</h4>
+        <h2>{this.props.metricCategory.title}</h2>
+        <h3>{this.props.metric.title}</h3>
         {metricDetails}
       </div>
     );

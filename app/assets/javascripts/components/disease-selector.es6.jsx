@@ -9,6 +9,7 @@ class DiseaseSelector extends React.Component {
 
     return (
       <div>
+        <h2>Diseases</h2>
         {diseases}
       </div>
     );
