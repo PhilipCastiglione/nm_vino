@@ -9,6 +9,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 
+gem 'react-rails', '~> 1.7'
+
 gem 'rails_admin', '~> 0.8'
 gem 'devise', '~> 4.1'
 
