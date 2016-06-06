@@ -4,7 +4,7 @@ class TopLevelSelector extends React.Component {
   }
   render() {
     let records = this.props.records.map ( record => {
-      return <div onClick={this.select.bind(this)} data-id={record.id} key={record.id}>{record.title}</div>
+      return <div className="selection" onClick={this.select.bind(this)} data-id={record.id} key={record.id}>{record.title}</div>
     });
 
     return (

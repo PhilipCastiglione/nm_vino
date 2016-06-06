@@ -1,6 +1,6 @@
 class RootNode extends React.Component {
   path() {
-    let path = "";
+    let path = "> ";
     if (this.state.selectedMeasure) { 
       path += this.state.selectedMeasure.title;
       if (this.state.selectedDisease) {
@@ -135,7 +135,7 @@ class RootNode extends React.Component {
       let metricDetails = this.state.selectedMetric['metric_details'];
       var selector = <MetricDetailSelector addScore={this.addScore.bind(this)} metricCategory={this.state.selectedMetricCategory} metric={this.state.selectedMetric} metricDetails={metricDetails} />;
     } else {
-      var selector = <div>Final score: {this.state.scores.reduce((a, b) => { return a + b; } )}</div>;
+      var selector = <div className="final-score">Final score: {this.state.scores.reduce((a, b) => { return a + b; } )}</div>;
     }
 
     return (
