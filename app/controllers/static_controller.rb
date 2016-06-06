@@ -40,6 +40,7 @@ class StaticController < ApplicationController
               metric_detail.metric_subdetails.each do |metric_subdetail|
                 current_metric_detail = matching(current_metric[:metric_details], metric_detail)
                 current_metric_detail[:metric_subdetails].push({
+                  id: metric_subdetail.id,
                   description: metric_subdetail.description,
                   score: metric_subdetail.score
                 })

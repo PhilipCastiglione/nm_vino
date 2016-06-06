@@ -1,10 +1,25 @@
 class MetricDetailSelector extends React.Component {
-  select(event) {
-    this.props.sendId(parseInt(event.nativeEvent.target.dataset.id, 10));
+  addScore(event) {
+    this.props.addScore(parseInt(event.nativeEvent.target.dataset.score, 10));
+  }
+  swap(event) {
+    $target = $(event.nativeEvent.target);
+    $target.hide();
+    $target.parent().find('div').slideToggle(100);
   }
   render() {
-    let metricDetails = this.props.metricDetails.map ( metricDetail => {
-      return <div onClick={this.select.bind(this)} data-id={metricDetail.id} key={metricDetail.id}>{metricDetail.description}</div>
+    let metricDetails = this.props.metricDetails.map(metricDetail => {
+      if (metricDetail['metric_subdetails'].length > 0 ) {
+        let subdetails = metricDetail['metric_subdetails'].map(metricSubdetail => {
+          return <div style={{display: 'none'}} onClick={this.addScore.bind(this)} data-score={metricSubdetail.score} key={metricSubdetail.id}>{metricSubdetail.description}</div>;
+        });
+        return <div onClick={this.swap.bind(this)} data-score={metricDetail.score} key={metricDetail.id}>
+                 <span>{metricDetail.description}</span>
+                 {subdetails}
+               </div>;
+      } else {
+        return <div onClick={this.addScore.bind(this)} data-score={metricDetail.score} key={metricDetail.id}>{metricDetail.description}</div>;
+      }
     });
 
     return (
