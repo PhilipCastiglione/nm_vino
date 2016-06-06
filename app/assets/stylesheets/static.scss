@@ -34,6 +34,17 @@ h1 { padding: 5px 0; }
   padding: 8px 0 0 15px;
 }
 
+.name-wrapper { 
+  text-align: center;
+  padding: 20px 0;
+ }
+
+.name-input, .name-button {
+  font-size: 20px;
+  padding: 5px;
+  margin: 5px;
+}
+
 .selection {
   padding: 15px 20px;
   font-size: 20px;
@@ -55,6 +66,7 @@ h1 { padding: 5px 0; }
   padding-top: 30px;
 }
 
+/* SCORES */
 table {
   margin: 30px auto;
   font-size: 18px;

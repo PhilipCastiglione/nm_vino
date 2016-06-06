@@ -1,4 +1,17 @@
 class RootNode extends React.Component {
+  constructor(props) {
+    super();
+    this.state = { 
+      patientName: null,
+      data: JSON.parse(props['data']),
+      selectedMeasure: null,
+      selectedDisease: null,
+      selectedMetricCategory: null,
+      selectedMetric: null,
+      scores: [],
+      finished: null
+    }
+  }
   path() {
     let path = "> ";
     if (this.state.selectedMeasure) { 
@@ -9,17 +22,8 @@ class RootNode extends React.Component {
     }
     return path;
   }
-  constructor(props) {
-    super();
-    this.state = { 
-      data: JSON.parse(props['data']),
-      selectedMeasure: null,
-      selectedDisease: null,
-      selectedMetricCategory: null,
-      selectedMetric: null,
-      scores: [],
-      finished: null
-    }
+  enterName(name) {
+    this.setState({'patientName': name });
   }
   selectMeasure(measureId) {
     let m = this.state.data['measures'].find(measure => { return measure['id'] === measureId; });
@@ -98,6 +102,7 @@ class RootNode extends React.Component {
     if (this.state.scores.length > 0) {
       if (this.state.finished) {
         this.setState({
+          'patientName': null,
           'selectedMeasure': null,
           'selectedDisease': null,
           'selectedMetricCategory': null,
@@ -120,17 +125,20 @@ class RootNode extends React.Component {
   }
   completeScoring() {
     let scores = JSON.parse(localStorage.getItem('scores')) || {};
+    // TODO: name
     scores[new Date()] = this.state.scores.reduce((a, b) => { return a + b; } );
     localStorage.setItem('scores', JSON.stringify(scores));
     this.setState({'finished': true});
   }
   render () {
-    if (this.state.selectedMeasure === null) {
+    if (this.state.patientName === null) {
+      var selector = <PatientName enterName={this.enterName.bind(this)} pageTitle="Enter Name" />;
+    }  else if (this.state.selectedMeasure === null) {
       let measures = this.state.data['measures'];
-      var selector = <TopLevelSelector sendId={this.selectMeasure.bind(this)} records={measures} pageTitle="Measures" />;
+      var selector = <TopLevelSelector selectRecord={this.selectMeasure.bind(this)} records={measures} pageTitle="Measures" />;
     } else if (this.state.selectedDisease === null) {
       let diseases = this.state.selectedMeasure['diseases'];
-      var selector = <TopLevelSelector sendId={this.selectDisease.bind(this)} records={diseases} pageTitle="Diseases" />;
+      var selector = <TopLevelSelector selectRecord={this.selectDisease.bind(this)} records={diseases} pageTitle="Diseases" />;
     } else if (this.state.finished === null) {
       let metricDetails = this.state.selectedMetric['metric_details'];
       var selector = <MetricDetailSelector addScore={this.addScore.bind(this)} metricCategory={this.state.selectedMetricCategory} metric={this.state.selectedMetric} metricDetails={metricDetails} />;

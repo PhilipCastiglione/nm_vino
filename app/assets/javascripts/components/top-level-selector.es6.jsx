@@ -1,6 +1,6 @@
 class TopLevelSelector extends React.Component {
   select(event) {
-    this.props.sendId(parseInt(event.nativeEvent.target.dataset.id, 10));
+    this.props.selectRecord(parseInt(event.nativeEvent.target.dataset.id, 10));
   }
   render() {
     let records = this.props.records.map ( record => {
