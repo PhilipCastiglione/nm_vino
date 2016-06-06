@@ -4,19 +4,7 @@
   box-sizing: border-box;
 }
 
-h1 {
+body {
   text-align: center;
-  padding: 20px 0;
 }
 
-.disease,
-.metric-category,
-.metric,
-.metric-detail,
-.metric-subdetail {
-  display: none;
-}
-
-.active .disease {
-  display: block;
-}
