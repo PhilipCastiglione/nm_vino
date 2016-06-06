@@ -51,22 +51,37 @@ class RootNode extends React.Component {
       }
     }
   }
+  firstMetricInCategory() {
+    return this.state.selectedMetric === this.state.selectedMetricCategory['metrics'][0];
+  }
   lastMetricInCategory() {
     return this.state.selectedMetric === [...this.state.selectedMetricCategory['metrics']].pop();
+  }
+  lastCategoryInDisease() {
+    return this.state.selectedMetricCategory === [...this.state.selectedDisease['metric_categories']].pop();
   }
   incrementMetric() {
     let idx = this.state.selectedMetricCategory['metrics'].indexOf(this.state.selectedMetric);
     let m = this.state.selectedMetricCategory['metrics'][++idx];
     this.setState({'selectedMetric': m});
   }
-  lastCategoryInDisease() {
-    return this.state.selectedMetricCategory === [...this.state.selectedDisease['metric_categories']].pop();
+  decrementMetric() {
+    let idx = this.state.selectedMetricCategory['metrics'].indexOf(this.state.selectedMetric);
+    let m = this.state.selectedMetricCategory['metrics'][--idx];
+    this.setState({'selectedMetric': m});
   }
   incrementCategory() {
     let idx = this.state.selectedDisease['metric_categories'].indexOf(this.state.selectedMetricCategory);
     let mc = this.state.selectedDisease['metric_categories'][++idx];
     this.setState({'selectedMetricCategory': mc});
     let m = mc['metrics'][0];
+    this.setState({'selectedMetric': m});
+  }
+  decrementCategory() {
+    let idx = this.state.selectedDisease['metric_categories'].indexOf(this.state.selectedMetricCategory);
+    let mc = this.state.selectedDisease['metric_categories'][--idx];
+    this.setState({'selectedMetricCategory': mc});
+    let m = [...mc['metrics']].pop();
     this.setState({'selectedMetric': m});
   }
   completeScoring() {
@@ -76,7 +91,14 @@ class RootNode extends React.Component {
   }
   back() {
     if (this.state.selectedMetricDetails.length > 0) {
-    // if there are any selected metric details, remove the last one, run the decrements
+      let mds = this.state.selectedMetricDetails;
+      mds.pop();
+      this.setState({'selectedMetricDetails': mds});
+      if (this.firstMetricInCategory()) {
+        this.decrementCategory();
+      } else {
+        this.decrementMetric();
+      }
     } else if (this.state.selectedDisease !== null) {
       this.setState({'selectedDisease': null});
     } else {
