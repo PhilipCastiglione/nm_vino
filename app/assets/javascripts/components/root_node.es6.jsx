@@ -17,7 +17,8 @@ class RootNode extends React.Component {
       selectedDisease: null,
       selectedMetricCategory: null,
       selectedMetric: null,
-      scores: []
+      scores: [],
+      finished: null
     }
   }
   selectMeasure(measureId) {
@@ -95,6 +96,16 @@ class RootNode extends React.Component {
   }
   back() {
     if (this.state.scores.length > 0) {
+      if (this.state.finished) {
+        this.setState({
+          'selectedMeasure': null,
+          'selectedDisease': null,
+          'selectedMetricCategory': null,
+          'selectedMetric': null,
+          'scores': [],
+          'finished': null
+        });
+      }
       this.deleteLastMetricDetail();
       if (this.firstMetricInCategory()) {
         this.decrementCategory();
@@ -108,9 +119,10 @@ class RootNode extends React.Component {
     }
   }
   completeScoring() {
-    console.log('all done');
-    console.log(this.state.scores);
-    // TODO: present confirm, post the ids to the end point for the scores actually maybe get with query params will be easiest
+    let scores = JSON.parse(localStorage.getItem('scores')) || {};
+    scores[new Date()] = this.state.scores.reduce((a, b) => { return a + b; } );
+    localStorage.setItem('scores', JSON.stringify(scores));
+    this.setState({'finished': true});
   }
   render () {
     if (this.state.selectedMeasure === null) {
@@ -119,9 +131,11 @@ class RootNode extends React.Component {
     } else if (this.state.selectedDisease === null) {
       let diseases = this.state.selectedMeasure['diseases'];
       var selector = <TopLevelSelector sendId={this.selectDisease.bind(this)} records={diseases} pageTitle="Diseases" />;
-    } else {
+    } else if (this.state.finished === null) {
       let metricDetails = this.state.selectedMetric['metric_details'];
       var selector = <MetricDetailSelector addScore={this.addScore.bind(this)} metricCategory={this.state.selectedMetricCategory} metric={this.state.selectedMetric} metricDetails={metricDetails} />;
+    } else {
+      var selector = <div>Final score: {this.state.scores.reduce((a, b) => { return a + b; } )}</div>;
     }
 
     return (

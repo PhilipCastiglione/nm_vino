@@ -1,5 +1,14 @@
 class StaticController < ApplicationController
   def index
+    @data = get_data.to_json
+  end
+
+  def scores
+  end
+
+  private
+
+  def get_data
     data = {}
     Measure.all.each do |measure|
       data[:measures] ||= []
@@ -50,11 +59,8 @@ class StaticController < ApplicationController
         end
       end
     end
-
-    @data = data.to_json
+    data
   end
-
-  private
 
   def matching(arr, record)
     arr.select { |i| i[:id] == record.id }.first
