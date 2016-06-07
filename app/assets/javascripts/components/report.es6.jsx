@@ -8,10 +8,10 @@ class Report extends React.Component {
             <tr>
               <td><strong>{metricCategory}</strong></td>
               <td><strong>TOTAL</strong></td>
-              <td><strong>{this.props.sections[metricCategory][metric]}</strong></td>
+              <td><strong>{this.props.sections[metricCategory][metric]} out of {this.props.sections[metricCategory]['max']}</strong></td>
             </tr>
           );
-        } else {
+        } else if (metric !== "max") {
         return (
             <tr>
               <td>{metricCategory}</td>

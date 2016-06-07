@@ -4,7 +4,11 @@
     <thead>
       <tr>
         <th><%= measure.title %></th>
-        <th>Score out of: <%= measure.max %></th>
+        <th></th>
+        <% measure.diseases.map {|d| d.metric_categories}.flatten.uniq.sort_by{|mc| mc.title}.each do |metric_category| %>
+          <th>Max: <%= metric_category.max %></th>
+        <% end %>
+        <th>Max: <%= measure.max %></th>
       </tr>
       <tr>
         <th>Name</th>

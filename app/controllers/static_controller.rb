@@ -38,6 +38,7 @@ class StaticController < ApplicationController
           current_disease = matching(current_measure[:diseases], disease)
           current_disease[:metric_categories].push({
             id: metric_category.id,
+            max: metric_category.max,
             title: metric_category.title,
             metrics: []
           })
@@ -100,6 +101,9 @@ class StaticController < ApplicationController
     end
 
     response['total'] = (metric_details.pluck(:score) + metric_subdetails.pluck(:score)).sum
+
+    all_metric_categories.each { |mc| response[:report][mc.title]['max'] = mc.max }
+
     response
   end
 end
