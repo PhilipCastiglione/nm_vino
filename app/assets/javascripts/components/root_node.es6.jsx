@@ -8,7 +8,7 @@ class RootNode extends React.Component {
       selectedDisease: null,
       selectedMetricCategory: null,
       selectedMetric: null,
-      scores: [],
+      metricDetailIds: [],
       finished: null
     }
   }
@@ -42,19 +42,17 @@ class RootNode extends React.Component {
       'selectedMetric': m
     });
   }
-  addScore(score) {
-    this.state.scores.push(score);
+  addMetricDetailOrSubdetailId(id, type) {
+    this.state.metricDetailIds.push([id, type]);
     if (!this.lastMetricInCategory()) {
       this.incrementMetric();
     } else {
       if (!this.lastCategoryInDisease()) {
         this.incrementCategory();
       } else {
-        this.completeScoring();
+        this.submitScoring();
       }
     }
-  }
-  selectMetricSubdetail(metricSubdetailId) {
   }
   firstMetricInCategory() {
     return this.state.selectedMetric === this.state.selectedMetricCategory['metrics'][0];
@@ -94,12 +92,12 @@ class RootNode extends React.Component {
     });
   }
   deleteLastMetricDetail() {
-    let scores = this.state.scores;
-    scores.pop();
-    this.setState({'scores': scores});
+    let metricDetailIds = this.state.metricDetailIds;
+    metricDetailIds.pop();
+    this.setState({'metricDetailIds': metricDetailIds});
   }
   back() {
-    if (this.state.scores.length > 0) {
+    if (this.state.metricDetailIds.length > 0) {
       if (this.state.finished) {
         this.setState({
           'patientName': null,
@@ -107,7 +105,7 @@ class RootNode extends React.Component {
           'selectedDisease': null,
           'selectedMetricCategory': null,
           'selectedMetric': null,
-          'scores': [],
+          'metricDetailIds': [],
           'finished': null
         });
       }
@@ -123,27 +121,48 @@ class RootNode extends React.Component {
       this.setState({'selectedMeasure': null});
     }
   }
-  completeScoring() {
+  submitScoring() {
+    $('.loading').show();
+    $.post('/scores', {data: this.state.metricDetailIds})
+      .done((result) => { this.updateLocalScores(result); })
+      .fail((error) => { 
+        alert("IMPORTANT: There was an error but your results have not been lost. Please contact the developer (ideally with photo or screenshot). You must refresh the page to continue. Server error: " + error);
+        let timestamp = new Date();
+        localStorage.setItem('error: ' + this.state.patientName + timestamp, this.state.metricDetailIds);
+      })
+      .always(() => { $('.loading').hide() });
+  }
+  updateLocalScores(scoreResponse) {
+    let newScore = scoreResponse;
+    newScore['name'] = this.state.patientName;
+    newScore['date'] = new Date();
     let scores = JSON.parse(localStorage.getItem('scores')) || {};
-    // TODO: name
-    scores[new Date()] = this.state.scores.reduce((a, b) => { return a + b; } );
+    if (Object.keys(scores).length > 0) {
+      var id = Math.max(...Object.keys(scores).map(s => { return parseInt(s, 10); })) + 1;
+    } else {
+      var id = 1;
+    }
+    scores[id] = newScore;
     localStorage.setItem('scores', JSON.stringify(scores));
     this.setState({'finished': true});
   }
   render () {
-    if (this.state.patientName === null) {
+    if (!this.state.patientName) {
       var selector = <PatientName enterName={this.enterName.bind(this)} pageTitle="Enter Name" />;
-    }  else if (this.state.selectedMeasure === null) {
+    }  else if (!this.state.selectedMeasure) {
       let measures = this.state.data['measures'];
       var selector = <TopLevelSelector selectRecord={this.selectMeasure.bind(this)} records={measures} pageTitle="Measures" />;
-    } else if (this.state.selectedDisease === null) {
+    } else if (!this.state.selectedDisease) {
       let diseases = this.state.selectedMeasure['diseases'];
       var selector = <TopLevelSelector selectRecord={this.selectDisease.bind(this)} records={diseases} pageTitle="Diseases" />;
-    } else if (this.state.finished === null) {
+    } else if (!this.state.finished) {
       let metricDetails = this.state.selectedMetric['metric_details'];
-      var selector = <MetricDetailSelector addScore={this.addScore.bind(this)} metricCategory={this.state.selectedMetricCategory} metric={this.state.selectedMetric} metricDetails={metricDetails} />;
+      var selector = <MetricDetailSelector addId={this.addMetricDetailOrSubdetailId.bind(this)} metricCategory={this.state.selectedMetricCategory} metric={this.state.selectedMetric} metricDetails={metricDetails} />;
     } else {
-      var selector = <div className="final-score">Final score: {this.state.scores.reduce((a, b) => { return a + b; } )}</div>;
+      let scores = JSON.parse(localStorage.getItem('scores'));
+      let id = Math.max(...Object.keys(scores).map(s => { return parseInt(s, 10); }));
+      let lastScore = scores[id];
+      var selector = <Report date={lastScore['date']} name={lastScore['name']} total={lastScore['total']} sections={lastScore['report']} />;
     }
 
     return (

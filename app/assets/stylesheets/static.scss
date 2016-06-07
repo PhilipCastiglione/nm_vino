@@ -7,6 +7,29 @@ $darkpaleblue: rgb(203, 218, 245);
   box-sizing: border-box;
 }
 
+.loading {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  background: rgba(0, 0, 0, .2);
+}
+
+.loading  p {
+  font-size: 30px;
+   position: relative;
+   top: 50%;
+   -webkit-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+}
+
+.loading-animation {
+  vertical-align: middle;
+  width: 80px;
+}
+
 h1, h2{
   text-align: center;
   background: $darkpaleblue;

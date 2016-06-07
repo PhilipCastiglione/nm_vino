@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root 'static#index'
   get '/scores' => 'static#scores'
+  post '/scores' => 'static#report'
 end

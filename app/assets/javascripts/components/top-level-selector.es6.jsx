@@ -3,7 +3,7 @@ class TopLevelSelector extends React.Component {
     this.props.selectRecord(parseInt(event.nativeEvent.target.dataset.id, 10));
   }
   render() {
-    let records = this.props.records.map ( record => {
+    let records = this.props.records.map(record => {
       return <div className="selection" onClick={this.select.bind(this)} data-id={record.id} key={record.id}>{record.title}</div>
     });
 

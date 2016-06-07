@@ -11,7 +11,11 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-  <%= yield %>
+    <div class="loading">
+      <p>Loading... <%= image_tag('loading.gif', class: 'loading-animation') %></p>
+    </div>
+
+    <%= yield %>
 
   </body>
 </html>

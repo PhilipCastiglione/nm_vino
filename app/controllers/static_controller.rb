@@ -6,6 +6,13 @@ class StaticController < ApplicationController
   def scores
   end
 
+  def report
+    metric_details, metric_subdetails = extract_records(params["data"].values)
+
+    response = build_response(metric_details, metric_subdetails)
+    render json: response
+  end
+
   private
 
   def get_data
@@ -64,5 +71,32 @@ class StaticController < ApplicationController
 
   def matching(arr, record)
     arr.select { |i| i[:id] == record.id }.first
+  end
+
+  def extract_records(data)
+    metric_detail_ids = data.select { |r| r.last == 'MetricDetail' }.map { |r| r.first }
+    metric_subdetail_ids = data.select { |r| r.last == 'MetricSubdetail' }.map { |r| r.first }
+    [MetricDetail.where(id: metric_detail_ids), MetricSubdetail.where(id: metric_subdetail_ids)]
+  end
+
+  def build_response(metric_details, metric_subdetails)
+    response = {report: {}}
+    all_metrics = (metric_details + metric_subdetails.map { |ms| ms.metric_detail }).map { |md| md.metric }.uniq
+    all_metric_categories = all_metrics.map { |m| m.metric_category }.uniq
+
+    all_metric_categories.each { |mc| response[:report][mc.title] = {} }
+    all_metrics.each { |m| response[:report][m.metric_category.title][m.title] = 0 }
+
+    metric_details.each { |md| response[:report][md.metric.metric_category.title][md.metric.title] += md.score }
+    metric_subdetails.each { |ms| response[:report][ms.metric_detail.metric.metric_category.title][ms.metric_detail.metric.title] += ms.score }
+
+    response[:report].each do |mc_title, mds|
+      mc_score = 0
+      mds.each { |md, score| mc_score += score }
+      response[:report][mc_title]["TOTAL"] = mc_score
+    end
+
+    response['total'] = (metric_details.pluck(:score) + metric_subdetails.pluck(:score)).sum
+    response
   end
 end

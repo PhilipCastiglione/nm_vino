@@ -3,7 +3,7 @@ class PatientName extends React.Component {
     let $input = $(event.nativeEvent.target).parent().find('input');
     let name = $input.val();
     if (name.length > 0) {
-      this.props.enterName($(event.nativeEvent.target).parent().find('input').value);
+      this.props.enterName(name);
     } else {
       $input.css('box-shadow', '0 0 4px #f00');
       setTimeout(() => { $input.css('box-shadow', ''); }, 200);
