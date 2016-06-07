@@ -1,0 +1,149 @@
+/* line 4, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* line 10, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.loading {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* line 19, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.loading p {
+  font-size: 30px;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+/* line 28, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.loading-animation {
+  vertical-align: middle;
+  width: 80px;
+}
+
+/* line 33, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+h1, h2 {
+  text-align: center;
+  background: #cbdaf5;
+}
+
+/* line 38, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+h1 {
+  padding: 5px 0;
+}
+
+/* line 40, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.back-placeholder, .back {
+  background: #cbdaf5;
+  padding: 5px 0 0 15px;
+}
+
+/* line 45, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.back {
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+}
+
+/* line 51, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.back:hover {
+  color: teal;
+}
+
+/* line 55, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.path {
+  background: #cbdaf5;
+  padding: 8px 0 0 15px;
+}
+
+/* line 60, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.name-wrapper {
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* line 65, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.name-input, .name-button {
+  font-size: 20px;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* line 71, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.selection {
+  padding: 15px 20px;
+  font-size: 20px;
+  border-top: 1px solid black;
+}
+
+/* line 77, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.selection:hover {
+  background: aliceblue;
+}
+
+/* line 79, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.subselection {
+  border-top: 1px solid black;
+  padding: 10px;
+}
+
+/* line 84, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.subselection:hover {
+  background: white;
+}
+
+/* line 86, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+.final-score {
+  text-align: center;
+  font-size: 30px;
+  padding-top: 30px;
+}
+
+/* SCORES */
+/* line 93, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+table {
+  margin: 30px auto;
+  font-size: 18px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+}
+
+/* line 101, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+th {
+  padding: 12px 15px;
+  border: 4px solid #cbdaf5;
+  background: aliceblue;
+}
+
+/* line 107, /Users/philipcastiglione/dev/stuff/nm_vino/app/assets/stylesheets/static.scss */
+td {
+  padding: 8px 15px;
+  border: 4px solid #cbdaf5;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
