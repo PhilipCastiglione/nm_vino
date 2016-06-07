@@ -14,10 +14,13 @@ class RootNode extends React.Component {
   }
   path() {
     let path = "> ";
-    if (this.state.selectedMeasure) { 
-      path += this.state.selectedMeasure.title;
-      if (this.state.selectedDisease) {
-        path += " > " + this.state.selectedDisease.title + " > " + this.state.selectedMetricCategory.title + " > " + this.state.selectedMetric.title;
+    if (this.state.patientName) {
+      path += this.state.patientName;
+      if (this.state.selectedMeasure) { 
+        path += " > " + this.state.selectedMeasure.title;
+        if (this.state.selectedDisease) {
+          path += " > " + this.state.selectedDisease.title + " > " + this.state.selectedMetricCategory.title + " > " + this.state.selectedMetric.title;
+        }
       }
     }
     return path;
@@ -117,8 +120,10 @@ class RootNode extends React.Component {
       }
     } else if (this.state.selectedDisease !== null) {
       this.setState({selectedDisease: null});
-    } else {
+    } else if (this.state.selectedMeasure !== null) {
       this.setState({selectedMeasure: null});
+    } else {
+      this.setState({patientName: null});
     }
   }
   submitScoring() {
