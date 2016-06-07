@@ -23,11 +23,11 @@ class RootNode extends React.Component {
     return path;
   }
   enterName(name) {
-    this.setState({'patientName': name });
+    this.setState({patientName: name });
   }
   selectMeasure(measureId) {
     let m = this.state.data['measures'].find(measure => { return measure['id'] === measureId; });
-    this.setState({'selectedMeasure': m});
+    this.setState({selectedMeasure: m});
     if (m['diseases'].length === 1) {
       this.selectDisease(m['diseases'][0]['id']);
     }
@@ -37,9 +37,9 @@ class RootNode extends React.Component {
     let mc = d['metric_categories'][0];
     let m = mc['metrics'][0];
     this.setState({
-      'selectedDisease': d,
-      'selectedMetricCategory': mc,
-      'selectedMetric': m
+      selectedDisease: d,
+      selectedMetricCategory: mc,
+      selectedMetric: m
     });
   }
   addMetricDetailOrSubdetailId(id, type) {
@@ -66,20 +66,20 @@ class RootNode extends React.Component {
   incrementMetric() {
     let idx = this.state.selectedMetricCategory['metrics'].indexOf(this.state.selectedMetric);
     let m = this.state.selectedMetricCategory['metrics'][++idx];
-    this.setState({'selectedMetric': m});
+    this.setState({selectedMetric: m});
   }
   decrementMetric() {
     let idx = this.state.selectedMetricCategory['metrics'].indexOf(this.state.selectedMetric);
     let m = this.state.selectedMetricCategory['metrics'][--idx];
-    this.setState({'selectedMetric': m});
+    this.setState({selectedMetric: m});
   }
   incrementCategory() {
     let idx = this.state.selectedDisease['metric_categories'].indexOf(this.state.selectedMetricCategory);
     let mc = this.state.selectedDisease['metric_categories'][++idx];
     let m = mc['metrics'][0];
     this.setState({
-      'selectedMetricCategory': mc,
-      'selectedMetric': m
+      selectedMetricCategory: mc,
+      selectedMetric: m
     });
   }
   decrementCategory() {
@@ -87,26 +87,26 @@ class RootNode extends React.Component {
     let mc = this.state.selectedDisease['metric_categories'][--idx];
     let m = [...mc['metrics']].pop();
     this.setState({
-      'selectedMetricCategory': mc,
-      'selectedMetric': m
+      selectedMetricCategory: mc,
+      selectedMetric: m
     });
   }
   deleteLastMetricDetail() {
     let metricDetailIds = this.state.metricDetailIds;
     metricDetailIds.pop();
-    this.setState({'metricDetailIds': metricDetailIds});
+    this.setState({metricDetailIds: metricDetailIds});
   }
   back() {
     if (this.state.metricDetailIds.length > 0) {
       if (this.state.finished) {
         this.setState({
-          'patientName': null,
-          'selectedMeasure': null,
-          'selectedDisease': null,
-          'selectedMetricCategory': null,
-          'selectedMetric': null,
-          'metricDetailIds': [],
-          'finished': null
+          patientName: null,
+          selectedMeasure: null,
+          selectedDisease: null,
+          selectedMetricCategory: null,
+          selectedMetric: null,
+          metricDetailIds: [],
+          finished: null
         });
       }
       this.deleteLastMetricDetail();
@@ -116,9 +116,9 @@ class RootNode extends React.Component {
         this.decrementMetric();
       }
     } else if (this.state.selectedDisease !== null) {
-      this.setState({'selectedDisease': null});
+      this.setState({selectedDisease: null});
     } else {
-      this.setState({'selectedMeasure': null});
+      this.setState({selectedMeasure: null});
     }
   }
   submitScoring() {
@@ -144,7 +144,7 @@ class RootNode extends React.Component {
     }
     scores[id] = newScore;
     localStorage.setItem('scores:' + this.state.selectedMeasure['title'], JSON.stringify(scores));
-    this.setState({'finished': true});
+    this.setState({finished: true});
   }
   render () {
     if (!this.state.patientName) {
