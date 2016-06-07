@@ -4,7 +4,7 @@ class StaticController < ApplicationController
   end
 
   def scores
-    @measures = Measure.all
+    @measures = Measure.includes(diseases: { metric_categories: { metrics: { metric_details: :metric_subdetails } } })
   end
 
   def report
@@ -18,7 +18,8 @@ class StaticController < ApplicationController
 
   def get_data
     data = {}
-    Measure.all.each do |measure|
+    measures = Measure.includes(diseases: { metric_categories: { metrics: { metric_details: :metric_subdetails } } })
+    measures.each do |measure|
       data[:measures] ||= []
       data[:measures].push({
         id: measure.id,
