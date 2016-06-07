@@ -136,14 +136,14 @@ class RootNode extends React.Component {
     let newScore = scoreResponse;
     newScore['name'] = this.state.patientName;
     newScore['date'] = new Date();
-    let scores = JSON.parse(localStorage.getItem('scores')) || {};
+    let scores = JSON.parse(localStorage.getItem('scores:' + this.state.selectedMeasure['title'])) || {};
     if (Object.keys(scores).length > 0) {
       var id = Math.max(...Object.keys(scores).map(s => { return parseInt(s, 10); })) + 1;
     } else {
       var id = 1;
     }
     scores[id] = newScore;
-    localStorage.setItem('scores', JSON.stringify(scores));
+    localStorage.setItem('scores:' + this.state.selectedMeasure['title'], JSON.stringify(scores));
     this.setState({'finished': true});
   }
   render () {
@@ -159,10 +159,10 @@ class RootNode extends React.Component {
       let metricDetails = this.state.selectedMetric['metric_details'];
       var selector = <MetricDetailSelector addId={this.addMetricDetailOrSubdetailId.bind(this)} metricCategory={this.state.selectedMetricCategory} metric={this.state.selectedMetric} metricDetails={metricDetails} />;
     } else {
-      let scores = JSON.parse(localStorage.getItem('scores'));
+      let scores = JSON.parse(localStorage.getItem('scores:' + this.state.selectedMeasure['title']));
       let id = Math.max(...Object.keys(scores).map(s => { return parseInt(s, 10); }));
       let lastScore = scores[id];
-      var selector = <Report date={lastScore['date']} name={lastScore['name']} total={lastScore['total']} sections={lastScore['report']} />;
+      var selector = <Report date={lastScore['date']} name={lastScore['name']} total={lastScore['total']} max={this.state.selectedMeasure['max']} sections={lastScore['report']} pageTitle={this.state.selectedMeasure['title'] + ' Measure Report'} />;
     }
 
     return (

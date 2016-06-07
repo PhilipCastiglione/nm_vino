@@ -3,13 +3,23 @@ class Report extends React.Component {
     let sections = Object.keys(this.props.sections).map(metricCategory => {
       let metrics = this.props.sections[metricCategory];
       return Object.keys(metrics).map(metric => {
+        if (metric === "total") {
         return (
-          <tr>
-            <td>{metricCategory}</td>
-            <td>{metric}</td>
-            <td>{this.props.sections[metricCategory][metric]}</td>
-          </tr>
-        );
+            <tr>
+              <td><strong>{metricCategory}</strong></td>
+              <td><strong>TOTAL</strong></td>
+              <td><strong>{this.props.sections[metricCategory][metric]}</strong></td>
+            </tr>
+          );
+        } else {
+        return (
+            <tr>
+              <td>{metricCategory}</td>
+              <td>{metric}</td>
+              <td>{this.props.sections[metricCategory][metric]}</td>
+            </tr>
+          );
+        }
       });
     });
 
@@ -19,14 +29,14 @@ class Report extends React.Component {
         <tr>
           <td><strong>ALL</strong></td>
           <td><strong>TOTAL</strong></td>
-          <td><strong>{this.props.total}</strong></td>
+          <td><strong>{this.props.total} out of {this.props.max}</strong></td>
         </tr>
       </tbody>
     ); 
 
     return (
       <div>
-        <h2>Report</h2>
+        <h2>{this.props.pageTitle}</h2>
         <table>
           <thead>
             <tr>
@@ -51,5 +61,6 @@ Report.propTypes = {
   date: React.PropTypes.string,
   name: React.PropTypes.string,
   total: React.PropTypes.number,
+  max: React.PropTypes.number,
   sections: React.PropTypes.object
 };

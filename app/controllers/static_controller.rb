@@ -4,6 +4,7 @@ class StaticController < ApplicationController
   end
 
   def scores
+    @measures = Measure.all
   end
 
   def report
@@ -22,6 +23,7 @@ class StaticController < ApplicationController
       data[:measures].push({
         id: measure.id,
         title: measure.title,
+        max: measure.max,
         diseases: []
       })
       measure.diseases.each do |disease|
@@ -93,7 +95,7 @@ class StaticController < ApplicationController
     response[:report].each do |mc_title, mds|
       mc_score = 0
       mds.each { |md, score| mc_score += score }
-      response[:report][mc_title]["TOTAL"] = mc_score
+      response[:report][mc_title]["total"] = mc_score
     end
 
     response['total'] = (metric_details.pluck(:score) + metric_subdetails.pluck(:score)).sum

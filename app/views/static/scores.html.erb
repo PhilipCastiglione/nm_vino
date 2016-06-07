@@ -1,11 +1,21 @@
 <h1>Scores</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Date/Time</th>
-      <th>Score</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+<% @measures.each do |measure| %>
+  <table data-measure=<%= measure.title %>>
+    <thead>
+      <tr>
+        <th><%= measure.title %></th>
+        <th>Score out of: <%= measure.max %></th>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Date/Time</th>
+        <% measure.diseases.map {|d| d.metric_categories}.flatten.uniq.sort_by{|mc| mc.title}.each do |metric_category| %>
+          <th><%= metric_category.title %> Total</th>
+        <% end %>
+        <th>Measure Total</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+<% end %>
