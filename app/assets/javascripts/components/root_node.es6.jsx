@@ -30,10 +30,11 @@ class RootNode extends React.Component {
   }
   selectMeasure(measureId) {
     let m = this.state.data['measures'].find(measure => { return measure['id'] === measureId; });
-    this.setState({selectedMeasure: m});
-    if (m['diseases'].length === 1) {
-      this.selectDisease(m['diseases'][0]['id']);
-    }
+    this.setState({selectedMeasure: m}, () => {
+      if (m['diseases'].length === 1) {
+        this.selectDisease(m['diseases'][0]['id']);
+      }
+    });
   }
   selectDisease(diseaseId) {
     let d = this.state.selectedMeasure['diseases'].find(disease => { return disease['id'] === diseaseId; });
