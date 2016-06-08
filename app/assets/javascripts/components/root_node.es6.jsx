@@ -128,7 +128,12 @@ class RootNode extends React.Component {
   }
   submitScoring() {
     $('.loading').show();
-    $.post('/scores', {data: this.state.metricDetailIds})
+    let data = {
+      data: this.state.metricDetailIds,
+      measureId: this.state.selectedMeasure['id'],
+      diseaseId: this.state.selectedDisease['id']
+    };
+    $.post('/scores', data)
       .done((result) => { this.updateLocalScores(result); })
       .fail((error) => { 
         alert("IMPORTANT: There was an error but your results have not been lost. Please contact the developer (ideally with photo or screenshot). You must refresh the page to continue. Server error: " + error);

@@ -8,10 +8,7 @@ class StaticController < ApplicationController
   end
 
   def report
-    metric_details, metric_subdetails = extract_records(params["data"].values)
-
-    response = build_response(metric_details, metric_subdetails)
-    render json: response
+    render json: build_report(extract_records params)
   end
 
   private
@@ -77,13 +74,19 @@ class StaticController < ApplicationController
     arr.select { |i| i[:id] == record.id }.first
   end
 
-  def extract_records(data)
+  def extract_records(params)
+    data = params["data"].values
     metric_detail_ids = data.select { |r| r.last == 'MetricDetail' }.map { |r| r.first }
     metric_subdetail_ids = data.select { |r| r.last == 'MetricSubdetail' }.map { |r| r.first }
-    [MetricDetail.where(id: metric_detail_ids), MetricSubdetail.where(id: metric_subdetail_ids)]
+    {
+      metric_details: MetricDetail.where(id: metric_detail_ids),
+      metric_subdetails: MetricSubdetail.where(id: metric_subdetail_ids),
+      measure: Measure.find(params["measureId"]),
+      disease: Disease.find(params["diseaseId"])
+    }
   end
 
-  def build_response(metric_details, metric_subdetails)
+  def build_report(metric_details:, metric_subdetails:, measure:, disease:)
     response = {report: {}}
     all_metrics = (metric_details + metric_subdetails.map { |ms| ms.metric_detail }).map { |md| md.metric }.uniq
     all_metric_categories = all_metrics.map { |m| m.metric_category }.uniq
@@ -100,9 +103,18 @@ class StaticController < ApplicationController
       response[:report][mc_title]["total"] = mc_score
     end
 
-    response['total'] = (metric_details.pluck(:score) + metric_subdetails.pluck(:score)).sum
+    missing_metric_categories = measure.diseases.map { |d| d.metric_categories }
+                                       .flatten
+                                       .uniq
+                                       .reject { |mc| disease.metric_categories.include?(mc) }
 
     all_metric_categories.each { |mc| response[:report][mc.title]['max'] = mc.max }
+
+    missing_metric_categories.each { |mc| response[:report][mc.title] = { 'max' => mc.max, 'total' => mc.max } }
+
+    missing_scores = missing_metric_categories.map { |mmc| mmc.max }
+
+    response['total'] = (metric_details.pluck(:score) + metric_subdetails.pluck(:score) + missing_scores).sum
 
     response
   end

@@ -118,15 +118,15 @@ MetricDetail.create!(description: "able", score: 2, metric: dress)
 ll = MetricCategory.create!(title: "Lower Limb")
 
 hf_left = Metric.create!(title: "HF", metric_category: ll)
-MetricDetail.create!(description: "paralysis", score: 0, metric: hf_left
-MetricDetail.create!(description: "flicker", score: 1, metric: hf_left
-MetricDetail.create!(description: "with gravity", score: 2, metric: hf_left
-MetricDetail.create!(description: "against gravity", score: 3, metric: hf_left
-hf_left_over = MetricDetail.create!(description: "overcome", metric: hf_left
+MetricDetail.create!(description: "paralysis", score: 0, metric: hf_left)
+MetricDetail.create!(description: "flicker", score: 1, metric: hf_left)
+MetricDetail.create!(description: "with gravity", score: 2, metric: hf_left)
+MetricDetail.create!(description: "against gravity", score: 3, metric: hf_left)
+hf_left_over = MetricDetail.create!(description: "overcome", metric: hf_left)
 MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: hf_left_over)
 MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: hf_left_over)
 MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: hf_left_over)
-MetricDetail.create!(description: "normal", score: 7, metric: hf_left
+MetricDetail.create!(description: "normal", score: 7, metric: hf_left)
 ke_left = Metric.create!(title: "KE", metric_category: ll)
 MetricDetail.create!(description: "paralysis", score: 0, metric: ke_left)
 MetricDetail.create!(description: "flicker", score: 1, metric: ke_left)
@@ -149,15 +149,15 @@ MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: d
 MetricDetail.create!(description: "normal", score: 7, metric: dorsif_left)
 
 hf_right = Metric.create!(title: "HF", metric_category: ll)
-MetricDetail.create!(description: "paralysis", score: 0, metric: hf_right
-MetricDetail.create!(description: "flicker", score: 1, metric: hf_right
-MetricDetail.create!(description: "with gravity", score: 2, metric: hf_right
-MetricDetail.create!(description: "against gravity", score: 3, metric: hf_right
-hf_right_over = MetricDetail.create!(description: "overcome", metric: hf_right
+MetricDetail.create!(description: "paralysis", score: 0, metric: hf_right)
+MetricDetail.create!(description: "flicker", score: 1, metric: hf_right)
+MetricDetail.create!(description: "with gravity", score: 2, metric: hf_right)
+MetricDetail.create!(description: "against gravity", score: 3, metric: hf_right)
+hf_right_over = MetricDetail.create!(description: "overcome", metric: hf_right)
 MetricSubdetail.create!(description: ">50% weakness", score: 4, metric_detail: hf_right_over)
 MetricSubdetail.create!(description: "<50% weakness", score: 5, metric_detail: hf_right_over)
 MetricSubdetail.create!(description: "just overcome", score: 6, metric_detail: hf_right_over)
-MetricDetail.create!(description: "normal", score: 7, metric: hf_right
+MetricDetail.create!(description: "normal", score: 7, metric: hf_right)
 ke_right = Metric.create!(title: "KE", metric_category: ll)
 MetricDetail.create!(description: "paralysis", score: 0, metric: ke_right)
 MetricDetail.create!(description: "flicker", score: 1, metric: ke_right)
@@ -193,16 +193,28 @@ MetricDetail.create!(description: "able but difficult", score: 1, metric: onem)
 MetricDetail.create!(description: "able", score: 2, metric: onem)
 
 sense = MetricCategory.create!(title: "Sensation")
-up = Metric.create!(title: "Upper Limb", metric_category: sense)
-MetricDetail.create!(description: ">75% affected", score: 0, metric: up)
-MetricDetail.create!(description: "50-75% affected", score: 1, metric: up)
-MetricDetail.create!(description: "0-50% affected", score: 2, metric: up)
-MetricDetail.create!(description: "unaffected", score: 3, metric: up)
-lo = Metric.create!(title: "Lower Limb", metric_category: sense)
-MetricDetail.create!(description: ">75% affected", score: 0, metric: lo)
-MetricDetail.create!(description: "50-75% affected", score: 1, metric: lo)
-MetricDetail.create!(description: "0-50% affected", score: 2, metric: lo)
-MetricDetail.create!(description: "unaffected", score: 3, metric: lo)
+
+up_left = Metric.create!(title: "Upper Limb", metric_category: sense)
+MetricDetail.create!(description: ">75% affected", score: 0, metric: up_left)
+MetricDetail.create!(description: "50-75% affected", score: 1, metric: up_left)
+MetricDetail.create!(description: "0-50% affected", score: 2, metric: up_left)
+MetricDetail.create!(description: "unaffected", score: 3, metric: up_left)
+lo_left = Metric.create!(title: "Lower Limb", metric_category: sense)
+MetricDetail.create!(description: ">75% affected", score: 0, metric: lo_left)
+MetricDetail.create!(description: "50-75% affected", score: 1, metric: lo_left)
+MetricDetail.create!(description: "0-50% affected", score: 2, metric: lo_left)
+MetricDetail.create!(description: "unaffected", score: 3, metric: lo_left)
+
+up_right = Metric.create!(title: "Upper Limb", metric_category: sense)
+MetricDetail.create!(description: ">75% affected", score: 0, metric: up_right)
+MetricDetail.create!(description: "50-75% affected", score: 1, metric: up_right)
+MetricDetail.create!(description: "0-50% affected", score: 2, metric: up_right)
+MetricDetail.create!(description: "unaffected", score: 3, metric: up_right)
+lo_right = Metric.create!(title: "Lower Limb", metric_category: sense)
+MetricDetail.create!(description: ">75% affected", score: 0, metric: lo_right)
+MetricDetail.create!(description: "50-75% affected", score: 1, metric: lo_right)
+MetricDetail.create!(description: "0-50% affected", score: 2, metric: lo_right)
+MetricDetail.create!(description: "unaffected", score: 3, metric: lo_right)
 
 pain = MetricCategory.create!(title: "Pain")
 res = Metric.create!(title: "Response", metric_category: pain)

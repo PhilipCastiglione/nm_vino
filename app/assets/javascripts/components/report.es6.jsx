@@ -2,6 +2,7 @@ class Report extends React.Component {
   render () {
     let sections = Object.keys(this.props.sections).map(metricCategory => {
       let metrics = this.props.sections[metricCategory];
+      console.log(metrics);
       return Object.keys(metrics).map(metric => {
         if (metric === "total") {
         return (

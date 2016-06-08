@@ -8,6 +8,7 @@ function showScores() {
         $tr.append($('<td>').text(val['name']));
         $tr.append($('<td>').text((new Date(val['date'])).toLocaleString()));
         $.each(val['report'], (function(mc, metrics) {
+        // need to sort them here and extract the totals
           $.each(metrics, (function(metric, metric_score) {
             if (metric === 'total') {
               $tr.append($('<td>').text(metric_score));
