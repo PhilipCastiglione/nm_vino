@@ -33,13 +33,17 @@ $darkpaleblue: rgb(203, 218, 245);
 h1, h2{
   text-align: center;
   background: $darkpaleblue;
+  padding: 5px 0;
 }
 
-h1 { padding: 5px 0; }
+h2 { 
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+ }
 
 .back-placeholder, .back {
   background: $darkpaleblue;
-  padding: 5px 0 0 15px;
+  padding: 5px 15px;
 }
 
 .back {
@@ -55,6 +59,7 @@ h1 { padding: 5px 0; }
 .path {
   background: $darkpaleblue;
   padding: 8px 0 0 15px;
+  font-size: 0.9em;
 }
 
 .name-wrapper { 
@@ -71,13 +76,13 @@ h1 { padding: 5px 0; }
 .selection {
   padding: 15px 20px;
   font-size: 20px;
-  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .selection:hover { background: $paleblue; }
 
 .subselection { 
-  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   padding: 10px;
 }
 
@@ -107,4 +112,15 @@ th {
 td {
   padding: 8px 15px;
   border: 4px solid $darkpaleblue;
+}
+
+@media (max-width: 800px) {
+  table { font-size: 14px; }
+  th { padding: 8px 12px; }
+  td { padding: 6px 8px; }
+}
+@media (max-width: 480px) {
+  table { font-size: 12px; }
+  th { padding: 6px 8px; }
+  td { padding: 4px 6px; }
 }
