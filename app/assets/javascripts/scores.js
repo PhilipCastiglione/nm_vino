@@ -11,7 +11,6 @@ function showScores() {
 
         let metricCategories = Object.keys(val['report']).sort();
 
-        console.log(metricCategories);
         $.each(metricCategories, ((i, metricCategory) => {
           $tr.append($('<td>').text(val['report'][metricCategory]['total']));
         }));
