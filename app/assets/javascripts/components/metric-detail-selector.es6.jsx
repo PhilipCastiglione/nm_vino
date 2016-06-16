@@ -12,6 +12,14 @@ class MetricDetailSelector extends React.Component {
     $target.find('span').hide();
     $target.find('div').slideDown(100);
   }
+  componentDidMount() {
+    $('#flash').css('color', 'green')
+    setTimeout(() => { $('#flash').css('color', 'black') }, 100)
+  }
+  componentDidUpdate() {
+    $('#flash').css('color', 'green')
+    setTimeout(() => { $('#flash').css('color', 'black') }, 100)
+  }
   render() {
     let metricDetails = this.props.metricDetails.map(metricDetail => {
       if (metricDetail['metric_subdetails'].length > 0 ) {
@@ -29,7 +37,7 @@ class MetricDetailSelector extends React.Component {
 
     return (
       <div>
-        <h2>{this.props.metricCategory.title} - {this.props.metric.title}</h2>
+        <h2 id="flash">{this.props.metricCategory.title} - {this.props.metric.title}</h2>
         {metricDetails}
       </div>
     );
