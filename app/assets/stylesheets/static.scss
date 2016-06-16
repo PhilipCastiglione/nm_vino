@@ -104,23 +104,17 @@ table {
 }
 
 th {
-  padding: 12px 15px;
   border: 4px solid $darkpaleblue;
   background: $paleblue;
 }
 
 td {
-  padding: 8px 15px;
   border: 4px solid $darkpaleblue;
 }
 
 @media (max-width: 800px) {
   table { font-size: 14px; }
-  th { padding: 8px 12px; }
-  td { padding: 6px 8px; }
 }
 @media (max-width: 480px) {
   table { font-size: 12px; }
-  th { padding: 6px 8px; }
-  td { padding: 4px 6px; }
 }
